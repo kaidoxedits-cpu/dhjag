@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>10K Thank You</title>
+
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+html,body{
+  width:100%;
+  height:100%;
+}
+
+body{
+  min-height:100vh;
+  background-image:"9317.png";
+  background-size:cover;
+  background-position:center;
+  background-repeat:no-repeat;
+  background-color:rgba(0,0,0,0.6);
+  background-blend-mode:darken;
+  font-family:Arial, sans-serif;
+  color:white;
+}
+
+/* MAIN CONTAINER */
+.container{
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  padding:20px;
+}
+
+/* TITLE */
+h1{
+  font-size:clamp(26px,5vw,44px);
+  text-shadow:0 0 10px pink;
+  margin-bottom:15px;
+  animation:float 3s ease-in-out infinite;
+}
+
+/* TEXT */
+p{
+  font-size:clamp(14px,2.5vw,20px);
+  max-width:800px;
+  margin:8px 0;
+  line-height:1.6;
+}
+
+/* SUBSCRIBE */
+.subscribe-btn{
+  margin-top:25px;
+  padding:12px 30px;
+  font-size:clamp(14px,3vw,20px);
+  background:linear-gradient(45deg,#ff416c,#ff4b2b);
+  color:white;
+  text-decoration:none;
+  border-radius:40px;
+  box-shadow:0 0 15px #ff4b2b;
+  animation:pulse 2s infinite;
+}
+
+
+.video-wrapper iframe{
+  width:100%;
+  height:315px;
+  border-radius:12px;
+}
+
+/* COMMENTS */
+.comment-box{
+  margin-top:30px;
+  width:100%;
+  max-width:500px;
+  background:rgba(0,0,0,0.55);
+  padding:20px;
+  border-radius:15px;
+}
+
+input,textarea{
+  width:100%;
+  padding:10px;
+  margin:6px 0;
+  border-radius:8px;
+  border:none;
+}
+
+button{
+  width:100%;
+  padding:10px;
+  background:hotpink;
+  border:none;
+  color:white;
+  border-radius:8px;
+}
+
+.comments p{
+  background:rgba(255,255,255,0.1);
+  padding:8px;
+  border-radius:6px;
+  margin-top:6px;
+}
+
+/* FLOATING HEARTS */
+.heart{
+  position:fixed;
+  bottom:-10px;
+  animation:floatUp 6s linear;
+  pointer-events:none;
+}
+
+/* ANIMATIONS */
+@keyframes float{
+  0%{transform:translateY(0);}
+  50%{transform:translateY(-10px);}
+  100%{transform:translateY(0);}
+}
+
+@keyframes pulse{
+  0%{box-shadow:0 0 10px red;}
+  50%{box-shadow:0 0 22px pink;}
+  100%{box-shadow:0 0 10px red;}
+}
+
+@keyframes floatUp{
+  from{transform:translateY(0);opacity:1;}
+  to{transform:translateY(-100vh);opacity:0;}
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1 id="title"></h1>
+
+<p>I really appreciate all the support and love from each and every one of you.</p>
+<p>In the beginning I never thought I would reach 10k subscribers.</p>
+<p>No one other than you guys helped me reach 10k subscribers 🎉</p>
+
+<a class="subscribe-btn" href="https://www.youtube.com/@MrOrange_Editz" target="_blank">
+❤️ Subscribe to MrOrange_Editz
+</a>
+
+
+<!-- COMMENTS -->
+<div class="comment-box">
+<h2>Leave a Comment 💬</h2>
+<input id="name" placeholder="Your name">
+<textarea id="comment" rows="3" placeholder="Your comment"></textarea>
+<button onclick="addComment()">Post Comment</button>
+<div id="comments" class="comments"></div>
+</div>
+
+</div>
+
+<script>
+/* TYPEWRITER */
+const titleText="THANK YOU GUYS FOR 10K SUBSCRIBERS 💖";
+let t=0;
+function type(){
+ if(t<titleText.length){
+  document.getElementById("title").innerHTML+=titleText.charAt(t);
+  t++;
+  setTimeout(type,80);
+ }
+}
+type();
+
+/* HEARTS */
+setInterval(()=>{
+ let h=document.createElement("div");
+ h.className="heart";
+ h.innerHTML="❤️";
+ h.style.left=Math.random()*100+"vw";
+ h.style.fontSize=Math.random()*20+10+"px";
+ document.body.appendChild(h);
+ setTimeout(()=>h.remove(),6000);
+},800);
+
+/* COMMENTS */
+function addComment(){
+ let n=name.value.trim();
+ let c=comment.value.trim();
+ if(!n||!c) return;
+
+ let arr=JSON.parse(localStorage.getItem("comments")||"[]");
+ arr.push(n+": "+c);
+ localStorage.setItem("comments",JSON.stringify(arr));
+ comment.value="";
+ loadComments();
+}
+
+function loadComments(){
+ let arr=JSON.parse(localStorage.getItem("comments")||"[]");
+ comments.innerHTML=arr.map(x=>"<p>"+x+"</p>").join("");
+}
+loadComments();
+</script>
+
+</body>
+</html>
